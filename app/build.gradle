@@ -1,0 +1,118 @@
+plugins {
+        id 'com.android.application'
+        id 'kotlin-android'
+        id 'kotlin-kapt'
+        id 'kotlin-parcelize'
+        id 'com.google.devtools.ksp' version '1.6.10-1.0.2'
+        id 'com.google.dagger.hilt.android'
+}
+
+hilt {
+        enableTransformForLocalTests = true
+}
+
+kotlin {
+        sourceSets {
+                debug {
+                        kotlin.srcDir("build/generated/ksp/debug/kotlin")
+                }
+                release {
+                        kotlin.srcDir("build/generated/ksp/release/kotlin")
+                }
+        }
+}
+
+android {
+        compileSdk 33
+
+        defaultConfig {
+                applicationId "com.scookie.brainscanner"
+                minSdk 28
+                targetSdk 33
+                versionCode 1
+                versionName "1.0"
+
+                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+                vectorDrawables {
+                        useSupportLibrary true
+                }
+        }
+
+        buildTypes {
+                release {
+                        minifyEnabled false
+                        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                }
+        }
+        compileOptions {
+                sourceCompatibility JavaVersion.VERSION_1_8
+                targetCompatibility JavaVersion.VERSION_1_8
+        }
+        kotlinOptions {
+                jvmTarget = '1.8'
+        }
+        buildFeatures {
+                compose true
+        }
+        composeOptions {
+                kotlinCompilerExtensionVersion compose_version
+                kotlinCompilerVersion '1.6.10'
+        }
+        packagingOptions {
+                resources {
+                        excludes += '/META-INF/{AL2.0,LGPL2.1}'
+                }
+        }
+}
+
+dependencies {
+
+        implementation 'androidx.core:core-ktx:1.9.0'
+        implementation 'androidx.appcompat:appcompat:1.5.1'
+        implementation 'com.google.android.material:material:1.6.1'
+        implementation "androidx.compose.ui:ui:$compose_version"
+        implementation "androidx.compose.material:material:$compose_version"
+        implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+        implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+        implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+        implementation 'androidx.activity:activity-compose:1.6.0'
+        testImplementation 'junit:junit:4.+'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+        androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+        debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+        // Destinations
+        implementation 'io.github.raamcosta.compose-destinations:core:1.1.2-beta'
+        ksp 'io.github.raamcosta.compose-destinations:ksp:1.1.2-beta'
+
+        // Navigation
+        implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+        implementation "androidx.navigation:navigation-compose:2.5.2"
+
+        // Timber
+        implementation 'com.jakewharton.timber:timber:5.0.1'
+
+        // Room
+        implementation "androidx.room:room-runtime:2.4.2"
+        kapt "androidx.room:room-compiler:2.4.2"
+
+        // Kotlin Extensions and Coroutines support for Room
+        implementation "androidx.room:room-ktx:2.4.2"
+
+        //Dagger - Hilt
+        implementation 'com.google.dagger:hilt-android:2.44'
+        kapt 'com.google.dagger:hilt-compiler:2.44'
+
+        // For instrumentation tests
+        androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44'
+        kaptAndroidTest 'com.google.dagger:hilt-compiler:2.44'
+
+        // For local unit tests
+        testImplementation 'com.google.dagger:hilt-android-testing:2.44'
+        kaptTest 'com.google.dagger:hilt-compiler:2.44'
+}
+
+kapt {
+        correctErrorTypes true
+}

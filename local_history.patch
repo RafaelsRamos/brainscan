@@ -1,0 +1,30 @@
+Index: app/src/main/java/com/scookie/brainscanner/features/devicesetup/presentation/DeviceListingViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/scookie/brainscanner/features/devicesetup/presentation/DeviceListingViewModel.kt b/app/src/main/java/com/scookie/brainscanner/features/devicesetup/presentation/DeviceListingViewModel.kt
+--- a/app/src/main/java/com/scookie/brainscanner/features/devicesetup/presentation/DeviceListingViewModel.kt	
++++ b/app/src/main/java/com/scookie/brainscanner/features/devicesetup/presentation/DeviceListingViewModel.kt	(date 1666364149537)
+@@ -78,9 +78,9 @@
+         val address = device.address
+         selectedDeviceAddress = address
+ 
+-        bitCommunication = BitBTHCommunication(context) { frame ->
++        bitCommunication = BitBTHCommunication(context) {
+             // Acquire data...
+-            println(frame)
++            println(it.analogArray)
+         }
+ 
+         //bitalino.state()
+@@ -102,8 +102,7 @@
+     }
+ 
+     private fun startAcquisition() {
+-        //bitCommunication.start(intArrayOf(0, 1, 2, 3, 4, 5), 100)
+-        bitCommunication.start(intArrayOf(0, 1, 2, 3, 4, 5), 1000)
++        bitCommunication.start(intArrayOf(0, 1, 2, 3, 4, 5), 100)
+     }
+ 
+     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
