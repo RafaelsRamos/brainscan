@@ -82,6 +82,8 @@ dependencies {
         androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
         debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
+        implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
+
         // Destinations
         implementation 'io.github.raamcosta.compose-destinations:core:1.1.2-beta'
         ksp 'io.github.raamcosta.compose-destinations:ksp:1.1.2-beta'
@@ -111,6 +113,9 @@ dependencies {
         // For local unit tests
         testImplementation 'com.google.dagger:hilt-android-testing:2.44'
         kaptTest 'com.google.dagger:hilt-compiler:2.44'
+
+        // Lottie
+        implementation "com.airbnb.android:lottie-compose:4.2.0"
 }
 
 kapt {

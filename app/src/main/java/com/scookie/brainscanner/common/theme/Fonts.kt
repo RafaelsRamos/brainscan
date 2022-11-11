@@ -38,7 +38,12 @@ object Fonts {
         Font(R.font.noto_sans_thin,               FontWeight.Thin,      FontStyle.Normal),
         Font(R.font.noto_sans_thin_italic,        FontWeight.Thin,      FontStyle.Italic),
 
-        )
+    )
 
+    val titleFamily = FontFamily(
+
+        Font(R.font.rammetto_regular,               FontWeight.Bold,       FontStyle.Normal),
+
+    )
 }
 

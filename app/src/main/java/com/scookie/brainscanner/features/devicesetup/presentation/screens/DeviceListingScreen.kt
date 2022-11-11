@@ -24,7 +24,7 @@ import com.scookie.brainscanner.features.devicesetup.presentation.DeviceListingV
 import com.scookie.brainscanner.features.devicesetup.presentation.events.DeviceListingEvent
 import timber.log.Timber
 
-@Destination(start = true)
+@Destination
 @Composable
 fun DeviceListingScreen(
     navigator: DestinationsNavigator,

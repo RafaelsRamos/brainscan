@@ -5,13 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.scookie.brainscanner.common.theme.BrainScannerTheme
-import com.scookie.brainscanner.features.devicesetup.presentation.screens.NavGraph
-import com.scookie.brainscanner.features.devicesetup.presentation.screens.NavGraphs
+import com.scookie.brainscanner.features.NavGraphs
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
