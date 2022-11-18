@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/ic_bubble.xml" value="0.6259259259259259" />
+        <entry key="app/src/main/res/drawable/ic_chart.xml" value="0.6046153846153847" />
+        <entry key="app/src/main/res/drawable/ic_headphone.xml" value="0.6259259259259259" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.6259259259259259" />
+        <entry key="app/src/main/res/drawable/ic_moon.xml" value="0.6259259259259259" />
+        <entry key="app/src/main/res/drawable/ic_music.xml" value="0.6259259259259259" />
+        <entry key="app/src/main/res/drawable/ic_play.xml" value="0.6259259259259259" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.6259259259259259" />
+        <entry key="app/src/main/res/drawable/ic_stop.xml" value="0.4305555555555556" />
+      </map>
+    </option>
+  </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
