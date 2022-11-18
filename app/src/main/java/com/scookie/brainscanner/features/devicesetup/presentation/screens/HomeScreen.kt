@@ -31,8 +31,8 @@ fun HomeTab() {
 }
 
 @Composable
-fun GreetingSection(
-    name: String = "Philipp"
+private fun GreetingSection(
+    name: String = "Rafa"
 ) {
 
     Column(

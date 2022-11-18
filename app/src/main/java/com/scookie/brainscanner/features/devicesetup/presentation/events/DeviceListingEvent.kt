@@ -8,7 +8,7 @@ sealed class DeviceListingEvent {
 
     object StopListening: DeviceListingEvent()
 
-    object ClearAll: DeviceListingEvent()
+    object OnStartingSession: DeviceListingEvent()
 
     data class DeviceSelected(val device: BluetoothDevice): DeviceListingEvent()
 

@@ -10,12 +10,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.os.postDelayed
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import com.scookie.brainscanner.device.DeviceHolder
 import com.scookie.brainscanner.device.DeviceScanner
 import com.scookie.brainscanner.device.DeviceState
 import com.scookie.brainscanner.device.bitalino.BitConstants
 import com.scookie.brainscanner.device.bitalino.connect.BitBTHCommunication
-import com.scookie.brainscanner.device.bitalino.connect.BitCommunication
 import com.scookie.brainscanner.device.bitalino.connect.BitDeviceScanner
 import com.scookie.brainscanner.device.broadcasts.DeviceStateBroadcastReceiver
 import com.scookie.brainscanner.features.devicesetup.domain.BitBluetoothDevice
@@ -28,13 +31,13 @@ import javax.inject.Inject
 @HiltViewModel
 class DeviceListingViewModel @Inject constructor(application: Application): AndroidViewModel(application), LifecycleEventObserver {
 
-    private val context: Context = getApplication<Application>().applicationContext
+    private val context: Context get() = getApplication<Application>().applicationContext
 
     val scanner: DeviceScanner = BitDeviceScanner(context) {
 
     }
 
-    private lateinit var bitCommunication: BitCommunication
+    private lateinit var bitCommunication: BitBTHCommunication
 
     private var selectedDeviceAddress: String = ""
 
@@ -44,16 +47,18 @@ class DeviceListingViewModel @Inject constructor(application: Application): Andr
 
         when (event) {
 
-            is StartListening   -> startListening()
-            is StopListening    -> stopListening()
-            is ClearAll         -> clearAll()
-            is DeviceSelected   -> connectToDevice(event.device)
+            is StartListening    -> startListening()
+            is StopListening     -> stopListening()
+            is OnStartingSession -> storeDeviceConnection()
+            is DeviceSelected    -> connectToDevice(event.device)
 
         }
 
     }
 
     private fun startListening() {
+        state = state.copy(isScanning = true)
+
         val deviceList = scanner.fetchPairedDevices().map { BitBluetoothDevice(it, DeviceState.NO_CONNECTION) }
         updateDeviceList(deviceList)
 
@@ -66,11 +71,12 @@ class DeviceListingViewModel @Inject constructor(application: Application): Andr
     }
 
     private fun stopListening() {
+        state = state.copy(isScanning = false)
         scanner.stopScanning()
     }
 
-    private fun clearAll() {
-        state = state.copy(devicesPaired = emptyList())
+    private fun storeDeviceConnection() {
+        DeviceHolder.saveConnection(bitCommunication)
     }
 
     private fun connectToDevice(device: BluetoothDevice) {
@@ -78,16 +84,7 @@ class DeviceListingViewModel @Inject constructor(application: Application): Andr
         val address = device.address
         selectedDeviceAddress = address
 
-        bitCommunication = BitBTHCommunication(context) {
-            // Acquire data...
-            val first = it.analogArray[0]
-            val second = it.analogArray[1]
-            val third = it.analogArray[2]
-            val forth = it.analogArray[3]
-            val fifth = it.analogArray[4]
-            println("Array -> $first | $second | $third | $forth | $fifth")
-        }
-
+        bitCommunication = BitBTHCommunication(context)
         bitCommunication.connect(device.address)
     }
 
@@ -95,7 +92,9 @@ class DeviceListingViewModel @Inject constructor(application: Application): Andr
 
         if (selectedDeviceAddress == address && deviceState == DeviceState.CONNECTED) {
             Handler(Looper.getMainLooper()).postDelayed(1000) {
-                startAcquisition()
+                if (bitCommunication.currentState != DeviceState.ACQUISITION_OK) {
+                    startAcquisition()
+                }
             }
         }
 

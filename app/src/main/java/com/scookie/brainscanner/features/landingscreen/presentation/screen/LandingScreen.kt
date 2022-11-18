@@ -1,32 +1,30 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.scookie.brainscanner.features.landingscreen.presentation.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.scookie.brainscanner.common.theme.ButtonGreen
-import com.scookie.brainscanner.common.theme.Fonts
-import com.scookie.brainscanner.common.theme.TextWhite
+import com.scookie.brainscanner.common.theme.*
+import com.scookie.brainscanner.features.common.presentation.LottieByUrl
 import com.scookie.brainscanner.features.destinations.DeviceListingScreenDestination
+
+private const val BRAIN_LOTTIE_URL = "https://assets4.lottiefiles.com/packages/lf20_33asonmr.json"
 
 @Destination(start = true)
 @Composable
@@ -35,12 +33,12 @@ fun LandingScreen(
 ) {
 
     val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(Color.White)
+    systemUiController.setSystemBarsColor(AppBackground)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 5.dp),
+            .background(AppBackground),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -63,12 +61,12 @@ fun LandingScreen(
                 .fillMaxHeight(0.50F),
             contentAlignment = Alignment.Center,
         ) {
-            BrainLottie()
+            LottieByUrl(BRAIN_LOTTIE_URL)
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        StartButton("Start") {
+        StartButton("Dive in") {
             navigator.navigate(DeviceListingScreenDestination)
         }
 
@@ -82,8 +80,9 @@ private fun StartButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth(0.85F)
             .fillMaxHeight(0.185F)
+            .padding(bottom = 5.dp)
             .clip(RoundedCornerShape(200.dp))
-            .background(color = ButtonGreen)
+            .background(color = MainButtonsColor)
             .clickable { onClick.invoke() },
         contentAlignment = Alignment.Center,
     ) {
@@ -92,19 +91,9 @@ private fun StartButton(text: String, onClick: () -> Unit) {
             text = text,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            color = TextWhite,
+            color = MainButtonsTextColor,
             fontFamily = Fonts.family,
             fontSize = 25.sp
         )
     }
-}
-
-@Composable fun BrainLottie() {
-
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.Url("https://assets4.lottiefiles.com/packages/lf20_33asonmr.json"))
-    LottieAnimation(
-        composition = composition,
-        iterations = LottieConstants.IterateForever
-    )
-
 }

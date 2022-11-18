@@ -20,7 +20,6 @@ import com.scookie.brainscanner.common.theme.AquaBlue
 import com.scookie.brainscanner.common.theme.NavigationSelectedBackground
 import com.scookie.brainscanner.features.devicesetup.presentation.models.BottomMenuContent
 
-
 @Composable
 fun BottomMenu(
     items: List<BottomMenuContent>,
@@ -51,6 +50,7 @@ fun BottomMenu(
                 inactiveTextColor = inactiveTextColor
             ) {
                 selectedItemIndex = index
+                item.onSelect()
             }
         }
     }

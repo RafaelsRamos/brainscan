@@ -3,6 +3,7 @@ package com.scookie.brainscanner.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -11,6 +12,7 @@ import com.scookie.brainscanner.features.NavGraphs
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@ExperimentalFoundationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
